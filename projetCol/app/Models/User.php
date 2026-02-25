@@ -12,6 +12,45 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+
+
+
+
+
+
+
+     // pivot historique dyal colocations
+    public function memberships()
+    {
+        return $this->hasMany(Membership::class);
+    }
+
+    // colocations via pivot
+    public function colocations()
+    {
+        return $this->belongsToMany(Colocation::class, 'memberships')
+            ->withPivot('role','joined_at','left_at')
+            ->withTimestamps();
+    }
+
+    // expenses li khallas
+    public function paidExpenses()
+    {
+        return $this->hasMany(Expense::class, 'payer_id');
+    }
+
+    // payments li howa khallas
+    public function paymentsMade()
+    {
+        return $this->hasMany(Payment::class, 'payer_id');
+    }
+
+    // payments li howa t9bel
+    public function paymentsReceived()
+    {
+        return $this->hasMany(Payment::class, 'receiver_id');
+    }
+
     /**
      * The attributes that are mass assignable.
      *
