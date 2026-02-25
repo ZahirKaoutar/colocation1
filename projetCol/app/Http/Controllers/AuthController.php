@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ class AuthController extends Controller
     $credentials = $request->only('email', 'password');
 
     if (Auth::attempt($credentials)) {
+        $request->session()->regenerate();
 
 
         if (auth()->user()->banned_at) {
@@ -24,16 +26,18 @@ class AuthController extends Controller
             return back()->withErrors(['email' => 'Votre compte est banni']);
         }
 
-        return redirect()->route('dashboard');
+        // return redirect()->route('dashboard');
+        echo "oui";
     }
 
     return back()->withErrors([
         'email' => 'Email ou mot de passe incorrect'
     ]);
 
+
  }
  public function Register(){
-    return view('auth.Register');
+    return view('auth.register');
  }
  public function RegisterSubmit(RegisterRequest $request){
 
@@ -48,7 +52,8 @@ class AuthController extends Controller
      ]);
 
    Auth::login($user);
-   return redirect()->route('dashboard');
+//    return redirect()->route('dashboard');
+echo'oui';
 
 
   }
