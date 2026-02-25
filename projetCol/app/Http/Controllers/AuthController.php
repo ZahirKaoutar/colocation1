@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 use Illuminate\Http\Request;
 
@@ -38,7 +41,7 @@ class AuthController extends Controller
      $user=User::create([
     'name'=>$request->name,
        'email'=>$request->email,
-        'password'=>Hash::check($request->password),
+        'password'=>Hash::make($request->password),
         'role'=>$role,
         'reputation'=>0,
         'banned_at'=>null,
@@ -49,6 +52,13 @@ class AuthController extends Controller
 
 
   }
+  public function logout()
+{
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+
+    return redirect('/login');
 
  }
-
+}
