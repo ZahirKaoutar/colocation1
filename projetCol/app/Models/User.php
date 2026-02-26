@@ -50,6 +50,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Payment::class, 'receiver_id');
     }
+    public function invitations(){
+        return $this->hasMany(Invitation::class);
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -60,7 +63,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'reputation','banned_at', 'role'
+        'reputation','
+        banned_at',
+        'role'
     ];
 
     /**

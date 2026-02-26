@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Support\Facades\Auth;
 use App\Models\Expense;
 use App\Models\User;
@@ -76,7 +77,7 @@ public function dashbordmembre()
             ->first();
     }
 
-    // ✅ RETURN TOUJOURS LA VUE
+
     return view('membre.dashboard', compact(
         'ExpenseGlobale',
         'recentExpense',

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashbordController;
+use App\Http\Controllers\ColocationController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -14,3 +15,4 @@ Route::post('loginSubmit',[AuthController::class,'SubmitLogin'])->name('loginSub
 Route::post('registerSubmit',[AuthController::class,'RegisterSubmit'])->name('registerSubmit');
 Route::post('logout',[AuthController::class,'logout'])->name('logout');
  Route::get('dashbordmembre',[DashbordController::class,'dashbordmembre'])->name('dashbordmembre');
+Route::resource('colocations',ColocationController::class);

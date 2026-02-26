@@ -61,7 +61,7 @@
             </a>
 
             {{-- Colocation --}}
-            <a href="#" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-white/60 hover:text-white">
+            <a href="{{ route('colocations.index') }}" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-white/60 hover:text-white">
                 <span class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
@@ -106,6 +106,14 @@
 
         {{-- Header --}}
         <div class="flex items-center justify-between mb-6">
+            <a href="{{ route('colocations.create') }}"
+               class="flex items-center gap-2 px-5 py-2.5 text-white text-sm font-semibold rounded-xl transition-all hover:-translate-y-0.5 hover:shadow-lg"
+               style="background: linear-gradient(135deg, #14b8a6, #0d9488); box-shadow: 0 4px 14px rgba(13,148,136,0.3);">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                Nouvelle colocation
+            </a>
             <div>
                 <h1 class="text-2xl font-bold text-gray-800">Tableau de bord</h1>
                 <p class="text-sm text-gray-400 mt-0.5">Bienvenue, {{ auth()->user()->name }} — voici votre résumé du mois</p>
@@ -143,6 +151,7 @@
 
 
             {{-- Score de réputation --}}
+
             <div class="fade-up bg-white rounded-2xl p-5 shadow-sm border border-gray-100 card-hover">
                 <div class="flex items-center justify-between mb-3">
                     <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Score réputation</span>
@@ -167,9 +176,10 @@
 
         {{-- ===== TABLE DÉPENSES RÉCENTES ===== --}}
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
+
             <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
                 <h2 class="text-sm font-bold text-gray-700">Dépenses récentes</h2>
-                <a href="#" class="text-xs text-teal-500 font-semibold hover:underline">Voir tout →</a>
+                <a href="{{ route('colocations.create') }}" class="text-xs text-teal-500 font-semibold hover:underline">Voir tout →</a>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-sm">

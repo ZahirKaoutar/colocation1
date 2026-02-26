@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Colocation extends Model
 {
+    protected $fillable=['name','status','owner_id'];
     // owner direct
     public function owner()
     {
@@ -30,5 +31,8 @@ class Colocation extends Model
     public function expenses()
     {
         return $this->hasMany(Expense::class);
+    }
+    public function invitations(){
+        return $this->hasMany(Invitation::class);
     }
 }
