@@ -13,7 +13,7 @@
         <h2 class="text-3xl font-extrabold text-blue-600 text-center mb-2">EasyColoc</h2>
         <p class="text-gray-500 text-center mb-6">Créez votre compte membre</p>
 
-        
+
 
         <form action="{{ route('registerSubmit') }}" method="POST">
             @csrf

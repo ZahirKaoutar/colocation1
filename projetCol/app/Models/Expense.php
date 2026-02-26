@@ -11,7 +11,7 @@ class Expense extends Model
         return $this->belongsTo(Colocation::class);
     }
 
-    // li khallas
+
     public function payer()
     {
         return $this->belongsTo(User::class, 'payer_id');
@@ -22,7 +22,7 @@ class Expense extends Model
         return $this->belongsTo(Category::class);
     }
 
-    // shares dyal had expense
+    
     public function shares()
     {
         return $this->hasMany(ExpenseShare::class);

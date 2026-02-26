@@ -25,9 +25,15 @@ class AuthController extends Controller
             Auth::logout();
             return back()->withErrors(['email' => 'Votre compte est banni']);
         }
+        if(auth()->usesr()->role==='admin'){
+                echo "admin";
+        }else{
+            return redirect()->route('dashbordmembre');
+        }
 
-        // return redirect()->route('dashboard');
-        echo "oui";
+
+
+
     }
 
     return back()->withErrors([
@@ -52,8 +58,8 @@ class AuthController extends Controller
      ]);
 
    Auth::login($user);
-//    return redirect()->route('dashboard');
-echo'oui';
+return redirect()->route('dashbordmembre');
+
 
 
   }
