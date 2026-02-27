@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
@@ -25,7 +24,7 @@ class AuthController extends Controller
             Auth::logout();
             return back()->withErrors(['email' => 'Votre compte est banni']);
         }
-        if(auth()->usesr()->role==='admin'){
+        if(auth()->user()->role==='admin'){
                 echo "admin";
         }else{
             return redirect()->route('dashbordmembre');

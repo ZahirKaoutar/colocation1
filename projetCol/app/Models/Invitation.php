@@ -6,14 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Invitation extends Model
 {
-      protected $fillable = [
-        'colocation_id',
-        'owner_id',
-        'email',
-        'token',
-        'status',
-      
-    ];
+
+ 
+    protected $fillable = ['colocation_id', 'owner_id', 'email', 'token', 'status'];
 
 
 

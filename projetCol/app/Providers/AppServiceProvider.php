@@ -19,6 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
-    }
+
+    // Hadi kat-forcer SMTP wakha l-cache ikoun m-bloqui
+    config(['mail.default' => 'smtp']);
+}
+    
 }

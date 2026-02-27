@@ -35,6 +35,7 @@ class ColocationController extends Controller
 {
     $Activmember = auth()->user()
         ->memberships()
+        ->whereIn('role',['member','owner'])
         ->whereNull('left_at')
         ->whereHas('colocation', function($q){
             $q->where('status','active');
@@ -101,4 +102,9 @@ class ColocationController extends Controller
         return redirect()->route('colocations.index')
         ->with('success','Colocation créée avec succès');
     }
+     public function AfficheMemberColocationActive(){
+
+
+
+     }
 }

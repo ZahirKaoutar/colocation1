@@ -12,6 +12,7 @@ class Colocation extends Model
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
+    
 
     // members via pivot
     public function members()

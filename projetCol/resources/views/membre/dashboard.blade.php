@@ -48,7 +48,6 @@
         <nav class="flex-1 px-3 py-5 space-y-1">
             <p class="px-3 mb-2 text-xs font-semibold uppercase tracking-widest text-white/25">Menu</p>
 
-            {{-- Dashboard --}}
             <a href="{{ route('dashbordmembre') }}" class="sidebar-link active flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold text-white">
                 <span class="w-8 h-8 rounded-lg bg-teal-500/20 flex items-center justify-center flex-shrink-0">
                     <svg class="w-4 h-4 text-teal-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -60,7 +59,6 @@
                 <span class="ml-auto w-1.5 h-1.5 rounded-full bg-teal-400"></span>
             </a>
 
-            {{-- Colocation --}}
             <a href="{{ route('colocations.index') }}" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-white/60 hover:text-white">
                 <span class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -71,7 +69,6 @@
                 Colocation
             </a>
 
-            {{-- Profil --}}
             <a href="#" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-white/60 hover:text-white">
                 <span class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -141,17 +138,11 @@
                 </div>
                 <p class="text-3xl font-bold text-gray-800">{{$ExpenseGlobale}}<span class="text-lg font-semibold text-gray-400">€</span></p>
                 <div class="flex items-center gap-1.5 mt-2">
-
                     <span class="text-xs text-gray-400">de ce mois</span>
                 </div>
             </div>
 
-
-
-
-
             {{-- Score de réputation --}}
-
             <div class="fade-up bg-white rounded-2xl p-5 shadow-sm border border-gray-100 card-hover">
                 <div class="flex items-center justify-between mb-3">
                     <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Score réputation</span>
@@ -162,21 +153,73 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-4">
-
-
                     <div>
                         <p class="text-2xl font-bold text-gray-800">{{ $scoreReputation}}</p>
-
                     </div>
                 </div>
             </div>
+
+            {{-- ===== CARTE COLOCATION ===== --}}
+            <div class="fade-up bg-white rounded-2xl p-5 shadow-sm border border-gray-100 card-hover sm:col-span-2">
+                {{-- Titre carte --}}
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-lg flex items-center justify-center"
+                             style="background: linear-gradient(135deg, #14b8a6, #0d9488);">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                                <polyline stroke-linecap="round" stroke-linejoin="round" points="9,22 9,12 15,12 15,22"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Ma colocation</p>
+                            <p class="text-base font-bold text-gray-800">{{ $membershipActive->colocation->name ?? '—' }}</p>
+                        </div>
+                    </div>
+                    <span class="inline-flex items-center gap-1 text-xs font-semibold text-green-600 bg-green-50 px-2.5 py-1 rounded-full">
+                        <span class="w-1.5 h-1.5 rounded-full bg-green-500 inline-block"></span>
+                        Active
+                    </span>
+                </div>
+
+                {{-- Séparateur --}}
+                <div class="border-t border-gray-100 mb-4"></div>
+
+                {{-- Membres --}}
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">
+                    Membres ({{ $activeMemberships->count() ?? 0 }})
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    @foreach($activeMemberships as $member)
+                        <div class="flex items-center gap-2 bg-gray-50 border border-gray-100 rounded-xl px-3 py-1.5">
+                            <div class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
+                                 style="background: linear-gradient(135deg, #14b8a6, #0d9488);">
+                                {{ strtoupper(substr($member->name, 0, 1)) }}
+                            </div>
+                            <span class="text-xs font-semibold text-gray-700">{{ $member->name}}{{$member->pivot->role}}</span>
+
+
+
+                        </div>
+                    @endforeach
+                    @if($membershipActive&&$membershipActive->role==='owner')
+                    <form action="{{ route('invitation.send', $membershipActive->colocation->id) }}" method="POST">
+                            @csrf
+                            <input type="email" name="email" placeholder="Email du membre">
+                            <button type="submit">Envoyer l'invitation</button>
+                    </form>
+                    @endif
+                </div>
+
+            </div>
+
+
+            {{-- ===== FIN CARTE COLOCATION ===== --}}
+
         </div>
-
-
 
         {{-- ===== TABLE DÉPENSES RÉCENTES ===== --}}
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
-
             <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
                 <h2 class="text-sm font-bold text-gray-700">Dépenses récentes</h2>
                 <a href="{{ route('colocations.create') }}" class="text-xs text-teal-500 font-semibold hover:underline">Voir tout →</a>
@@ -185,30 +228,21 @@
                 <table class="w-full text-sm">
                     <thead>
                         <tr class="bg-gray-50 text-xs text-gray-400 font-semibold uppercase tracking-wide">
-                              <th class="px-6 py-3 text-left">Payé par</th>
+                            <th class="px-6 py-3 text-left">Payé par</th>
                             <th class="px-6 py-3 text-left">Catégorie</th>
-
                             <th class="px-6 py-3 text-left">Date</th>
                             <th class="px-6 py-3 text-right">Montant</th>
                             <th class="px-6 py-3 text-center">Colocation</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-50">
-
                         <tr class="hover:bg-gray-50 transition-colors">
-
-
                             <td class="px-6 py-4 text-gray-500">{{ $recentExpense->payer->name??'_'}}</td>
                             <td class="px-6 py-4 text-gray-500">{{ $recentExpense->category->name??'_'}}</td>
                             <td class="px-6 py-4 text-gray-400">{{ $recentExpense->date??'_'}}</td>
                             <td class="px-6 py-4 text-right font-bold text-gray-800">{{ $recentExpense->amount??'_'}}</td>
-
                             <td class="px-6 py-4 text-right font-bold text-gray-800">{{ $recentExpense->colocation->name??'_'}}</td>
-
                         </tr>
-
-
-
                     </tbody>
                 </table>
             </div>

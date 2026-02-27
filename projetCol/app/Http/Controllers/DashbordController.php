@@ -8,6 +8,8 @@ use App\Models\Expense;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 
+use App\Models\Colocation;
+
 use Illuminate\Http\Request;
 
 class DashbordController extends Controller{
@@ -64,6 +66,12 @@ public function dashbordmembre()
     $ExpenseGlobale = 0;
     $recentExpense = null;
 
+
+
+
+
+
+
     if ($colocationIds->isNotEmpty()) {
 
         $ExpenseGlobale = Expense::whereIn('colocation_id', $colocationIds)
@@ -78,10 +86,40 @@ public function dashbordmembre()
     }
 
 
+// Récupérer la colocation active via la table Membership
+$activeMemberships = collect(); // Définit comme une collection vide par défaut
+
+// Récupérer la colocation active via la table Membership
+$membershipActive = $user->memberships()
+    ->whereNull('left_at')
+    ->whereHas('colocation', function($q) {
+        $q->where('status', 'active');
+    })
+    ->first();
+
+if ($membershipActive) {
+    // Récupérer tous les membres actifs de la même colocation
+    $activeMemberships = $membershipActive->colocation
+        ->members()
+        ->wherePivot('left_at', null)
+        ->get();
+}
+
+return view('membre.dashboard', compact(
+    'ExpenseGlobale',
+    'recentExpense',
+    'scoreReputation',
+    'activeMemberships',
+    'membershipActive'
+));
+
+
     return view('membre.dashboard', compact(
         'ExpenseGlobale',
         'recentExpense',
-        'scoreReputation'
+        'scoreReputation',
+        'activeMemberships',
+        'membershipActive'
     ));
 }
 
